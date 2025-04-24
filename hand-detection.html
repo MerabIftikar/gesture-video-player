@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube Gesture Control</title>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      let player;
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '360',
+          width: '640',
+          videoId: 'rGSc4QDZoMw', // 👈 Your YouTube video ID goes here
+          events: {
+            onReady: () => {
+              console.log("Player is ready");
+            }
+          }
+        });
+      }
+
+      window.addEventListener('message', function (e) {
+        if (player) {
+          if (e.data === 'handDetected') {
+            if (player.getPlayerState() === 1) {
+              player.pauseVideo();
+            } else {
+              player.playVideo();
+            }
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="player"></div>
+  </body>
+</html>
